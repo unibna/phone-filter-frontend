@@ -127,7 +127,7 @@ const Home = () => {
                 <span className=" text-brand_primary">browse</span> to choose a
                 file
               </div>
-              <div className=" opacity-40">(JPG, PNG and SVG support)</div>
+              <div className=" opacity-40">(XLSX, and CSV support)</div>
             </div>
           </div>
         </Upload>
