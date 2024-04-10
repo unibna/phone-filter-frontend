@@ -46,13 +46,25 @@ const vpassword = (value) => {
   }
 };
 
+const vconfirmpassword = (password1, password2) => {
+  if (password1 !== password2) {
+    return (
+      <div className="invalid-feedback d-block">
+        The password and confirm password do not match.
+      </div>
+    );
+  }
+};
+
 const Register = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [adminKey, setAdminKey] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -66,9 +78,19 @@ const Register = (props) => {
     setEmail(email);
   };
 
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
+  const onChangeAdminKey = (e) => {
+    const adminKey = e.target.value;
+    setAdminKey(adminKey);
+  };
+
+  const onChangePassword1 = (e) => {
+    const password1 = e.target.value;
+    setPassword1(password1);
+  };
+
+  const onChangePassword2 = (e) => {
+    const password2 = e.target.value;
+    setPassword2(password2);
   };
 
   const handleRegister = (e) => {
@@ -80,12 +102,13 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
+      AuthService.register(username, email, password1, password2, adminKey).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
         },
         (error) => {
+          console.log(error);
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -142,9 +165,33 @@ const Register = (props) => {
                   type="password"
                   className="form-control"
                   name="password"
-                  value={password}
-                  onChange={onChangePassword}
+                  value={password1}
+                  onChange={onChangePassword1}
                   validations={[required, vpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password2">Confirm password</label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="password2"
+                  value={password2}
+                  onChange={onChangePassword2}
+                  // validations={[required, vconfirmpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="adminKey">Admin Key</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="adminKey"
+                  value={adminKey}
+                  onChange={onChangeAdminKey}
+                  // validations={[required, validAdminKey]}
                 />
               </div>
 

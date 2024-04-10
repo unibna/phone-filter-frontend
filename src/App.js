@@ -119,6 +119,13 @@ const App = () => {
             </li>
           </div>
         )} */}
+        <div className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <Link to={"/register"} className="nav-link">
+                Create a new account
+              </Link>
+            </li>
+          </div>
       </nav>
 
       <div className="container mt-3">
