@@ -59,6 +59,7 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          background: "#148B6F",
         }}
       >
         <div
@@ -81,6 +82,7 @@ const Home = () => {
             showRemoveIcon: true,
           }}
           progress={{ strokeWidth: 2, showInfo: false }}
+          style={{ background: "#148B6F" }}
           // onChange={handleFileChange}
         >
           <div>

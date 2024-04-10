@@ -57,7 +57,11 @@ const App = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <nav 
+        className="navbar navbar-expand navbar-light" 
+        style={{
+          background: "#148B6F"
+        }}>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
