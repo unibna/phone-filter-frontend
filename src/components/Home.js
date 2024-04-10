@@ -6,43 +6,14 @@ import { CsvToHtmlTable } from "react-csv-to-table";
 // import UserService from "../services/user.service";
 
 const Home = () => {
-  // const [content, setContent] = useState("");
   const [csvData, setCsvData] = useState();
+  const [fileName, setFileName] = useState();
   useEffect(() => {
     if (!localStorage.getItem("user")) {
       window.location.href = "/login";
     }
     return () => {};
   }, []);
-
-  // useEffect(() => {
-  //   UserService.getPublicContent().then(
-  //     (response) => {
-  //       setContent(response.data);
-  //     },
-  //     (error) => {
-  //       const _content =
-  //         (error.response && error.response.data) ||
-  //         error.message ||
-  //         error.toString();
-
-  //       setContent(_content);
-  //     }
-  //   );
-  // }, []);
-
-  // const csvmaker = function (data) {
-  //   let csvRows = [];
-  //   const headers = Object.keys(data[0]);
-  //   csvRows.push(headers.join(","));
-  //   for (const row of data) {
-  //     const values = headers.map((e) => {
-  //       return row[e];
-  //     });
-  //     csvRows.push(values.join(","));
-  //   }
-  //   return csvRows.join("\n");
-  // };
 
   const uploadImage = async (options) => {
     const { onSuccess, onError, file } = options;
@@ -57,6 +28,8 @@ const Home = () => {
       },
     };
     fmData.append("file", file);
+    console.log('name', file.name) 
+    setFileName(file.name.split('.')[0] + '.csv');
     try {
       const res = await axios.post(
         "http://116.118.88.41/api/customer/phones/filters?to_download=true",
@@ -76,7 +49,6 @@ const Home = () => {
       // );
     }
   };
-  console.log("csvData", csvData);
 
   return (
     <div className="container">
@@ -96,9 +68,9 @@ const Home = () => {
             top: "16px",
           }}
         >
-          <CSVLink data={csvData || []}>Download CSV</CSVLink>
+        {csvData ? <CSVLink data={csvData} filename={fileName}>Download CSV</CSVLink> : null}
+        {/* {csvData ? <CSVDownload data={csvData} target="_blank" fileName={fileName}/> : null} */}
         </div>
-        <CSVDownload data={csvData || []} target="_blank" />
 
         <Upload
           customRequest={uploadImage}
